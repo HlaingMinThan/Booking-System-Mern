@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function Navbar() {
     return (
-        <header className='flex justify-between items-center p-3'>
+        <header className='flex justify-between items-center'>
             {/* logo */}
             <div>
                 <Link to="/" className="flex items-center text-primary gap-2">
