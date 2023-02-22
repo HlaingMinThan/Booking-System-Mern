@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors';
 import morgan from 'morgan';
+import prisma from './prisma/index.js';
 
 const app = express();
 
@@ -13,9 +14,20 @@ app.use(cors({
 
 app.use(morgan('dev'))
 
-app.post('/register', (req, res) => {
-    let { name, email, password} = req.body;
-    return res.json(req.body);
+app.post('/register', async (req, res) => {
+    try {
+        let { username, email, password} = req.body;
+        let user = await prisma.user.create({
+            data : {
+                username,
+                email,
+                password 
+            }
+        })
+        return res.json(user);
+    }catch (e) {
+        return res.status(500).send(e.message);
+    }
 })
 
 app.listen(4000,() => {
