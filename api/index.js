@@ -7,11 +7,15 @@ import prisma from './prisma/index.js';
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
+import download from 'image-downloader'
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const uploadFolderPath = new URL('uploads', import.meta.url).pathname;
+app.use('/uploads',express.static(uploadFolderPath))
 
 app.use(cors({
     credentials: true,
@@ -86,6 +90,18 @@ app.get('/me',async (req,res) => {
 
 app.post('/logout', (req,res) => {
     return res.cookie('token','').send({message : 'logout success'});
+})
+
+app.post('/upload-link', async(req,res) => {
+    let {url} = req.body;
+    const filename = 'photo_'+Date.now()+'.jpg';
+    const options = {
+        url,
+        dest: uploadFolderPath+'/'+filename
+      };
+      
+    await download.image(options);
+    return res.status(200).send({filename, url: process.env.APP_URL+'uploads/'+filename })
 })
 
 app.listen(4000,() => {
