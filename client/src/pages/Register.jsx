@@ -8,11 +8,16 @@ export default function Login() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
 
-    let register = (e) => {
+    let register = async (e) => {
         e.preventDefault();
-        axios.post('/register', {
-            username, email, password
-        });
+        try {
+            await axios.post('/register', {
+                username, email, password
+            });
+            alert('you can login now')
+        } catch (e) {
+            alert('error' + e.message)
+        }
     }
 
     return (
