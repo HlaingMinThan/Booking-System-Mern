@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type="text"] , input[type="email"] ,input[type="password"]  {
+input[type="text"] , input[type="email"] ,input[type="password"] ,textarea {
     @apply border w-full my-3 py-3 px-4 rounded-2xl 
 }
 
