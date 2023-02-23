@@ -7,14 +7,17 @@ export const UserContext = createContext({});
 export const UserContextProvider = ({ children }) => {
 
     let [user, setUser] = useState(null)
+    let [isAuthReady, setIsAuthReady] = useState(false)
+
     useEffect(() => {
         if (!user) {
             axios.get('/me').then((res) => {
+                setIsAuthReady(true)
                 setUser(res.data);
             })
         }
     }, [])
-    return <UserContext.Provider value={{ user, setUser }}>
+    return <UserContext.Provider value={{ user, setUser, isAuthReady }}>
         {children}
     </UserContext.Provider>
 }

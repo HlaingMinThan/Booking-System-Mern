@@ -3,6 +3,10 @@ import App from "../App";
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
+import AccountLayout from '../pages/layouts/AccountLayout'
+import Profile from '../pages/Profile'
+import Bookings from '../pages/Bookings'
+import Accommodations from '../pages/Accommodations'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +24,28 @@ const router = createBrowserRouter([
       {
         path: "/Register",
         element: <Register />
+      },
+      {
+        path: "/account",
+        element: <AccountLayout />,
+        children: [
+          {
+            path: "",
+            element: <Profile />
+          },
+          {
+            path: "profile",
+            element: <Profile />
+          },
+          {
+            path: "bookings",
+            element: <Bookings />
+          },
+          {
+            path: "accommodations",
+            element: <Accommodations />
+          },
+        ]
       }
     ]
   },

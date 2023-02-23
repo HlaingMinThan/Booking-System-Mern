@@ -84,6 +84,10 @@ app.get('/me',async (req,res) => {
     }
 })
 
+app.post('/logout', (req,res) => {
+    return res.cookie('token','').send({message : 'logout success'});
+})
+
 app.listen(4000,() => {
     console.log('app is running on localhost:4000');
 })
