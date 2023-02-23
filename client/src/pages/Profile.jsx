@@ -14,9 +14,11 @@ export default function Profile() {
     }
 
     return (
-        <div className='flex items-center flex-col'>
-            <div className='mb-4' >Logged In As {user.username} ({user.email})</div>
-            <button className="primary max-w-sm" onClick={logoutHandler}>Logout</button>
+        <div className='mx-auto max-w-lg my-10'>
+            <div className='flex items-center flex-col'>
+                <div className='mb-4' >Logged In As {user.username} ({user.email})</div>
+                <button className="primary max-w-sm" onClick={logoutHandler}>Logout</button>
+            </div>
         </div>
     )
 }
