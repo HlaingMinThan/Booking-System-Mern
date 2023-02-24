@@ -25,7 +25,7 @@ export default function AccommodationCreate() {
             title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features: selectedFeatures
         }
         await axios.post('/places', place);
-        navigate('/account/places')
+        navigate('/account/accommodations')
     }
 
     return (
