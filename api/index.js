@@ -140,6 +140,47 @@ app.post('/upload' , upload.array('photos',100),async(req,res) => {
         return res.status(200).send(photos)
 });
 
+app.post('/places',async (req,res) => {
+    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
+    let {token} = req.cookies;
+    let user = jwt.verify(token,process.env.JWT_SECRET);
+    let place = await prisma.place.create({
+        data : {
+            title,
+            address,
+            description,
+            extraInfo,
+            checkIn:+checkIn,
+            checkOut:+checkOut,
+            maxGuests:+maxGuests,
+            owner_id : user.id 
+        }
+    });
+    //create photos for created place
+    photos = photos.map(p => ({place_id  : place.id,url : p}))
+    await prisma.photo.createMany({
+        data : photos
+    })
+    
+    //create features for created place
+    features = features.map(f => ({name : f,place_id : place.id}))
+    await prisma.feature.createMany({
+        data : features
+    })
+
+    let createdPlace = await prisma.place.findUnique({
+        where: {
+            id:place.id
+        },
+        include : {
+            owner: true,
+            features:true,
+            photos:true
+        }
+    })
+    return res.json(createdPlace);
+})
+
 app.listen(4000,() => {
     console.log('app is running on localhost:4000');
 })

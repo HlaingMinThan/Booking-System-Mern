@@ -39,7 +39,7 @@ model Place {
 
 model Photo {
   id Int @id @default(autoincrement())
-  name String
+  url String
   place_id Int
   place   Place @relation(fields: [place_id], references: [id])
   created_at DateTime @default(now())
