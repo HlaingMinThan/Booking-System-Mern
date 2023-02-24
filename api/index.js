@@ -8,6 +8,34 @@ import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import download from 'image-downloader'
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + file.originalname.split('.').pop());
+    }
+});
+
+const upload = multer({
+        storage,
+        dest: 'uploads/' ,
+        // validation
+        fileFilter: function (req, file, cb) {
+            // Define the allowed file extensions
+            const allowedExtensions = /jpeg|jpg|png|gif/;
+            const fileExtension = file.originalname.split('.').pop();
+        
+            // Check if the file extension is allowed
+            if (allowedExtensions.test(fileExtension)) {
+            cb(null, true);
+            } else {
+            cb(new Error('Only image files are allowed'));
+            }
+        }
+})
 
 const app = express();
 
@@ -98,11 +126,19 @@ app.post('/upload-link', async(req,res) => {
     const options = {
         url,
         dest: uploadFolderPath+'/'+filename
-      };
-      
+    };
     await download.image(options);
     return res.status(200).send({filename, url: process.env.APP_URL+'uploads/'+filename })
 })
+
+app.post('/upload' , upload.array('photos',100),async(req,res) => {
+        let photos= [];
+        req.files.forEach(file => {
+            let {filename} = file;
+            photos.push({filename, url: process.env.APP_URL+'uploads/'+filename });
+        })
+        return res.status(200).send(photos)
+});
 
 app.listen(4000,() => {
     console.log('app is running on localhost:4000');

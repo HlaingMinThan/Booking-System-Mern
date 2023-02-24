@@ -16,6 +16,25 @@ export default function AccommodationCreate() {
         setPhotoUrl('');
     }
 
+    let uploadHanlder = async (e) => {
+        let files = e.target.files;
+
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i]
+            formData.append('photos', file);
+        }
+        let res = await axios.post('/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        let resPhotos = res.data;
+        let urls = resPhotos.map(p => p.url);
+        setPhotos(prev => [...prev, ...urls]);
+    }
+
     return (
         <form action="" className='max-w-xl mx-auto'>
             {/* Title */}
@@ -47,7 +66,7 @@ export default function AccommodationCreate() {
                             ))}
                             {/* trick to make custom appearance of input file 🎉 */}
                             <label className='cursor-pointer flex justify-center items-center px-4 gap-1 border w-[120px] h-[100px] rounded-lg text-gray-400'>
-                                <input type="file" className='hidden' />
+                                <input type="file" multiple className='hidden' onChange={uploadHanlder} />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                                 </svg>Upload
