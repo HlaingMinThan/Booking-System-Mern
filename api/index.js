@@ -148,8 +148,21 @@ app.get('/places', async (req,res) => {
             owner_id : user.id 
         }
     });
-    console.log(places)
     return res.status(200).send(places);
+});
+
+app.get('/places/:id', async (req,res) => {
+    let id = +req.params.id;
+    let place = await prisma.place.findUnique({
+        where : {
+            id
+        },
+        include : {
+            features : true,
+            photos : true
+        }
+    });
+    return res.status(200).send(place);
 });
 
 app.post('/places',async (req,res) => {
@@ -192,6 +205,62 @@ app.post('/places',async (req,res) => {
     })
     return res.json(createdPlace);
 })
+
+app.put('/places/:id', async (req,res) => {
+    let id = +req.params.id;
+    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
+
+    //check ownership
+    let {token} = req.cookies;
+    if(token) {
+        let userPayload = jwt.verify(token,process.env.JWT_SECRET);
+        let updatePlace = await prisma.place.findUnique({
+            where : {
+                id
+            }
+        });
+        if(userPayload.id === updatePlace.owner_id) {
+            let place = await prisma.place.update({
+                where : {
+                    id
+                },
+                data  : {
+                    title,
+                    address,
+                    description,
+                    extraInfo,
+                    checkIn:+checkIn,
+                    checkOut:+checkOut,
+                    maxGuests:+maxGuests,
+                }
+            });
+    
+            // update photos
+            await prisma.photo.deleteMany({
+                where : {
+                    place_id : place.id
+                },
+            })
+            photos = photos.map(p => ({url : p,place_id : place.id}))
+            await prisma.photo.createMany({
+                data : photos
+            })
+            
+            // update features
+            await prisma.feature.deleteMany({
+                where : {
+                    place_id : place.id
+                },
+            })
+            features = features.map(f => ({name : f,place_id : place.id}))
+            await prisma.feature.createMany({
+                data : features
+            })
+    
+            return res.status(200).send(place);
+        }
+    }
+});
 
 app.listen(4000,() => {
     console.log('app is running on localhost:4000');

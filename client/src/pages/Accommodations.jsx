@@ -9,7 +9,7 @@ export default function Accommodations() {
         axios.get('/places').then((res) => {
             setPlaces(res.data)
         })
-    });
+    }, []);
 
     return (
         <>
@@ -18,7 +18,7 @@ export default function Accommodations() {
             </div>
             <div className="max-w-3xl mx-auto mt-5">
                 {places.length && places.map(place => (
-                    <Link to={`/accommodations/${place.id}`} className='flex gap-3 mt-4' key={place.id}>
+                    <Link to={`/account/accommodations/edit/${place.id}`} className='flex gap-3 mt-4' key={place.id}>
                         <div className='bg-gray-100 w-32 h-32 shrink-0'>
                             <img src="" alt="" />
                         </div >

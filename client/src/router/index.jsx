@@ -8,6 +8,7 @@ import Profile from '../pages/Profile'
 import Bookings from '../pages/Bookings'
 import Accommodations from '../pages/Accommodations'
 import AccommodationCreate from '../pages/AccommodationCreate'
+import AccommodationEdit from '../pages/AccommodationEdit'
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
           {
             path: "accommodations/create",
             element: <AccommodationCreate />
+          },
+          {
+            path: "accommodations/edit/:id",
+            element: <AccommodationEdit />
           },
         ]
       }
