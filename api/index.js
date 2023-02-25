@@ -140,6 +140,18 @@ app.post('/upload' , upload.array('photos',100),async(req,res) => {
         return res.status(200).send(photos)
 });
 
+app.get('/places', async (req,res) => {
+    let {token} = req.cookies;
+    let user = jwt.verify(token,process.env.JWT_SECRET);
+    let places = await prisma.place.findMany({
+        where : {
+            owner_id : user.id 
+        }
+    });
+    console.log(places)
+    return res.status(200).send(places);
+});
+
 app.post('/places',async (req,res) => {
     let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
     let {token} = req.cookies;
