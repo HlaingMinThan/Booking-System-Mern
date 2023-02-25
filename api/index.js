@@ -144,6 +144,18 @@ app.post('/upload' , upload.array('photos',100),async(req,res) => {
         return res.status(200).send(photos)
 });
 
+app.get('/places' , async (req,res) => {
+    let places = await prisma.place.findMany(
+        {
+            include : {
+                photos : true
+            }
+        }
+    );
+    console.log(places)
+    return res.status(200).json(places);
+})
+
 app.get('/user-places', async (req,res) => {
     let {token} = req.cookies;
     let user = jwt.verify(token,process.env.JWT_SECRET);
