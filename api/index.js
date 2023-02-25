@@ -188,7 +188,7 @@ app.get('/user-places/:id', async (req,res) => {
 });
 
 app.post('/user-places',async (req,res) => {
-    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
+    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features , price} = req.body
     let {token} = req.cookies;
     let user = jwt.verify(token,process.env.JWT_SECRET);
     let place = await prisma.place.create({
@@ -200,7 +200,8 @@ app.post('/user-places',async (req,res) => {
             checkIn:+checkIn,
             checkOut:+checkOut,
             maxGuests:+maxGuests,
-            owner_id : user.id 
+            owner_id : user.id ,
+            price:+price
         }
     });
     //create photos for created place
@@ -230,7 +231,7 @@ app.post('/user-places',async (req,res) => {
 
 app.put('/user-places/:id', async (req,res) => {
     let id = +req.params.id;
-    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
+    let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features , price} = req.body
 
     //check ownership
     let {token} = req.cookies;
@@ -254,6 +255,7 @@ app.put('/user-places/:id', async (req,res) => {
                     checkIn:+checkIn,
                     checkOut:+checkOut,
                     maxGuests:+maxGuests,
+                    price:+price
                 }
             });
     

@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 export default function AccommodationForm() {
 
     let [title, setTitle] = useState('');
+    let [price, setPrice] = useState('');
     let [address, setAddress] = useState('');
     let [description, setDescription] = useState('');
     let [extraInfo, setExtraInfo] = useState('');
@@ -29,6 +30,7 @@ export default function AccommodationForm() {
             setMaxGuests(data.maxGuests);
             setSelectedFeatures(data.features.map(f => f.name))
             setPhotos(data.photos.map(p => p.url))
+            setPrice(data.price)
         })
     }, [id])
 
@@ -37,7 +39,7 @@ export default function AccommodationForm() {
     let savePlaceHandler = async (e) => {
         e.preventDefault();
         let place = {
-            title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features: selectedFeatures
+            title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features: selectedFeatures, price
         }
         if (id) {
             await axios.put(`/user-places/${id}`, place);
@@ -90,6 +92,11 @@ export default function AccommodationForm() {
                     <label htmlFor="">Max Number of guests</label>
                     <input type="text" placeholder='5' value={maxGuests} onChange={e => setMaxGuests(e.target.value)} />
                 </div>
+            </div>
+            {/* Price */}
+            <div className='mb-3'>
+                <Label label="Price" description="Rental Price for per night" htmlFor='price' />
+                <input type="text" id='price' onChange={e => setPrice(e.target.value)} value={price} />
             </div>
             {/* save btn */}
             <button className="primary">Save</button>
