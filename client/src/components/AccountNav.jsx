@@ -1,14 +1,7 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 export default function AccountNav() {
-    let { user, isAuthReady } = useContext(UserContext);
-    let navigate = useNavigate()
-
-    if (isAuthReady && !user) {
-        navigate('/login')
-    }
 
     let handleActive = ({ isActive }) => {
         let classes = 'px-4 py-2 rounded-full flex gap-1'

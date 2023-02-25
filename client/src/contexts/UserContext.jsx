@@ -12,9 +12,12 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         if (!user) {
             axios.get('/me').then((res) => {
-                setIsAuthReady(true)
                 setUser(res.data);
+            }).then(() => {
+                setIsAuthReady(true)
             })
+        } else {
+            setIsAuthReady(true)
         }
     }, [])
     return <UserContext.Provider value={{ user, setUser, isAuthReady }}>

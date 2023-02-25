@@ -18,7 +18,7 @@ export default function Accommodations() {
             </div>
             <div className="max-w-3xl mx-auto mt-5">
                 {!!places.length && places.map(place => (
-                    <Link to={`/account/accommodations/edit/${place.id}`} className='flex gap-3 mt-4' key={place.id}>
+                    <Link to={`/account/accommodations/edit/${place.id}`} className='flex gap-3 mt-4 bg-gray-50 p-3 rounded-lg' key={place.id}>
                         <div className='bg-gray-100 w-32 h-32 shrink-0'>
                             <img src={place.photos[0]?.url} alt="" />
                         </div >
