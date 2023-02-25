@@ -20,7 +20,7 @@ export default function Accommodations() {
                 {places.length && places.map(place => (
                     <Link to={`/account/accommodations/edit/${place.id}`} className='flex gap-3 mt-4' key={place.id}>
                         <div className='bg-gray-100 w-32 h-32 shrink-0'>
-                            <img src="" alt="" />
+                            <img src={place.photos[0]?.url} alt="" />
                         </div >
                         <div className='shrink grow-0'>
                             <h2 className='text-xl'>{place.title}</h2>

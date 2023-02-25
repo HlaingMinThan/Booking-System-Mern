@@ -150,6 +150,9 @@ app.get('/places', async (req,res) => {
     let places = await prisma.place.findMany({
         where : {
             owner_id : user.id 
+        },
+        include : {
+            photos:true
         }
     });
     return res.status(200).send(places);
