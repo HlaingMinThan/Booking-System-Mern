@@ -17,7 +17,7 @@ export default function Accommodations() {
                 <Link to="/account/accommodations/create" className='px-4 py-2 rounded-full  gap-1 bg-primary text-white'> + Add new place</Link>
             </div>
             <div className="max-w-3xl mx-auto mt-5">
-                {places.length && places.map(place => (
+                {!!places.length && places.map(place => (
                     <Link to={`/account/accommodations/edit/${place.id}`} className='flex gap-3 mt-4' key={place.id}>
                         <div className='bg-gray-100 w-32 h-32 shrink-0'>
                             <img src={place.photos[0]?.url} alt="" />
