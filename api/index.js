@@ -147,6 +147,9 @@ app.post('/upload' , upload.array('photos',100),async(req,res) => {
 app.get('/places' , async (req,res) => {
     let places = await prisma.place.findMany(
         {
+            orderBy : {
+                created_at: 'desc'
+            },
             include : {
                 photos : true
             }
