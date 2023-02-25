@@ -127,8 +127,12 @@ app.post('/upload-link', async(req,res) => {
         url,
         dest: uploadFolderPath+'/'+filename
     };
-    await download.image(options);
-    return res.status(200).send({filename, url: process.env.APP_URL+'uploads/'+filename })
+    if(url) {
+        await download.image(options);
+        return res.status(200).send({filename, url: process.env.APP_URL+'uploads/'+filename })
+    }else{
+        return res.status(422).send('need photo url')
+    }
 })
 
 app.post('/upload' , upload.array('photos',100),async(req,res) => {
