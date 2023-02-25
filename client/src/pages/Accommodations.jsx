@@ -6,7 +6,7 @@ export default function Accommodations() {
     let [places, setPlaces] = useState([]);
 
     useEffect(() => {
-        axios.get('/places').then((res) => {
+        axios.get('/user-places').then((res) => {
             setPlaces(res.data)
         })
     }, []);

@@ -144,7 +144,7 @@ app.post('/upload' , upload.array('photos',100),async(req,res) => {
         return res.status(200).send(photos)
 });
 
-app.get('/places', async (req,res) => {
+app.get('/user-places', async (req,res) => {
     let {token} = req.cookies;
     let user = jwt.verify(token,process.env.JWT_SECRET);
     let places = await prisma.place.findMany({
@@ -158,7 +158,7 @@ app.get('/places', async (req,res) => {
     return res.status(200).send(places);
 });
 
-app.get('/places/:id', async (req,res) => {
+app.get('/user-places/:id', async (req,res) => {
     let id = +req.params.id;
     let place = await prisma.place.findUnique({
         where : {
@@ -172,7 +172,7 @@ app.get('/places/:id', async (req,res) => {
     return res.status(200).send(place);
 });
 
-app.post('/places',async (req,res) => {
+app.post('/user-places',async (req,res) => {
     let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
     let {token} = req.cookies;
     let user = jwt.verify(token,process.env.JWT_SECRET);
@@ -213,7 +213,7 @@ app.post('/places',async (req,res) => {
     return res.json(createdPlace);
 })
 
-app.put('/places/:id', async (req,res) => {
+app.put('/user-places/:id', async (req,res) => {
     let id = +req.params.id;
     let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features} = req.body
 
