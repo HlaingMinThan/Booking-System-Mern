@@ -341,7 +341,11 @@ app.get('/bookings/:id' , async  (req,res) => {
                 id :+id
             },
             include : {
-                place : true
+                place : {
+                    include : {
+                        photos : true
+                    }
+                }
             }
         });
         let hasAccess = booking.user_id === userPayload.id;

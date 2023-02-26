@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import PlaceInfo from '../components/PlaceInfo';
+import PhotosGallery from '../components/PhotosGallery';
 import axios from 'axios';
 
 export default function BookingDetails() {
@@ -15,7 +16,14 @@ export default function BookingDetails() {
     }, [id])
     return (
         !!booking && (
-            <PlaceInfo place={booking.place} />
+            <>
+                <PlaceInfo place={booking.place} />
+                {/* show booking detail */}
+                <div>
+
+                </div>
+                <PhotosGallery place={booking.place} />
+            </>
         )
     )
 }
