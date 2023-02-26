@@ -19,7 +19,7 @@ export default function AccommodationForm() {
     let [selectedFeatures, setSelectedFeatures] = useState([]);
     let { id } = useParams();
     useEffect(() => {
-        axios.get(`/user-places/${id}`).then(res => {
+        axios.get(`/places/${id}`).then(res => {
             let { data } = res;
             setTitle(data.title);
             setAddress(data.address);
@@ -42,7 +42,7 @@ export default function AccommodationForm() {
             title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features: selectedFeatures, price
         }
         if (id) {
-            await axios.put(`/user-places/${id}`, place);
+            await axios.put(`/places/${id}`, place);
         } else {
             await axios.post('/user-places', place);
         }

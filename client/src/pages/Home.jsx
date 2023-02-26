@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Home() {
 
@@ -13,7 +14,7 @@ export default function Home() {
     return (
         <div className='mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-8 gap-y-16'>
             {!!places.length && places.map(place => (
-                <div>
+                <Link to={`/accommodations/${place.id}`} key={place.id}>
                     <div className=" bg-gray-100 rounded-2xl"><img src={place.photos[0]?.url} className="rounded-2xl " /></div>
                     <div className="p-2">
                         <h2 className='font-semibold'>{place.title}</h2>
@@ -24,7 +25,7 @@ export default function Home() {
                             </p>
                         </div>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     )

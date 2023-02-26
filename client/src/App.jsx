@@ -7,7 +7,7 @@ function App() {
 
   return (
     <UserContextProvider>
-      <div className='p-4'>
+      <div className='p-4 max-w-[80%] mx-auto'>
         <Navbar />
         <Outlet />
       </div>

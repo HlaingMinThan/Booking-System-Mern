@@ -9,6 +9,7 @@ import Bookings from '../pages/Bookings'
 import Accommodations from '../pages/Accommodations'
 import AccommodationCreate from '../pages/AccommodationCreate'
 import AccommodationEdit from '../pages/AccommodationEdit'
+import AccommodationDetails from '../pages/AccommodationDetails'
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,11 @@ const router = createBrowserRouter([
             element: <AccommodationEdit />
           },
         ]
-      }
+      },
+      {
+        path: "accommodations/:id",
+        element: <AccommodationDetails />,
+      },
     ]
   },
 ]);

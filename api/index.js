@@ -173,7 +173,7 @@ app.get('/user-places', async (req,res) => {
     return res.status(200).send(places);
 });
 
-app.get('/user-places/:id', async (req,res) => {
+app.get('/places/:id', async (req,res) => {
     let id = +req.params.id;
     let place = await prisma.place.findUnique({
         where : {
@@ -229,7 +229,7 @@ app.post('/user-places',async (req,res) => {
     return res.json(createdPlace);
 })
 
-app.put('/user-places/:id', async (req,res) => {
+app.put('/places/:id', async (req,res) => {
     let id = +req.params.id;
     let {title, address, description, extraInfo, checkIn, checkOut, maxGuests, photos, features , price} = req.body
 
