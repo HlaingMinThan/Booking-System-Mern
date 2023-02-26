@@ -331,6 +331,30 @@ app.post('/bookings', async (req,res) => {
     return res.status(200).json(booking);
 });
 
+app.get('/bookings/:id' , async  (req,res) => {
+    let {token} = req.cookies;
+    let {id} = req.params;
+    if(token) {
+        let userPayload = jwt.verify(token,process.env.JWT_SECRET);
+        let booking = await prisma.booking.findUnique({
+            where : {
+                id :+id
+            },
+            include : {
+                place : true
+            }
+        });
+        let hasAccess = booking.user_id === userPayload.id;
+        if(userPayload && hasAccess) {
+            return res.status(200).json(booking);
+        } else {
+            return res.status(422).json('user not found with that token');
+        }
+    }else {
+        return res.status(422).json('user not found with that token');
+    }
+})
+
 app.listen(4000,() => {
     console.log('app is running on localhost:4000');
 })
