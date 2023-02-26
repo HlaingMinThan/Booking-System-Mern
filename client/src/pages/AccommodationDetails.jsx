@@ -72,7 +72,7 @@ export default function AccommodationDetails() {
                 </button>
             </div>
             <div>
-                <div className='grid grid-cols-[2fr_1fr] mt-8'>
+                <div className='grid grid-cols-[2fr_1fr] mt-8 gap-4'>
                     <div>
                         <h2 className='text-2xl font-semibold'>Description</h2>
                         <p>{place.description}</p>
@@ -83,7 +83,7 @@ export default function AccommodationDetails() {
                     <BookingWidget place={place} />
                 </div>
             </div>
-            {place.extraInfo && <div>
+            {place.extraInfo && <div className='mt-6'>
                 <h2 className='text-2xl font-semibold'>Extra Info</h2>
                 <p className='text-gray-500'>{place.extraInfo}</p>
             </div>}
