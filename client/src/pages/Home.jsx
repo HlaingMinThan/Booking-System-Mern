@@ -12,7 +12,7 @@ export default function Home() {
         })
     }, [])
     return (
-        <div className='mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-8 gap-y-16'>
+        <div className='mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16'>
             {!!places.length && places.map(place => (
                 <Link to={`/accommodations/${place.id}`} key={place.id}>
                     <div className=" bg-gray-100 rounded-2xl"><img src={place.photos[0]?.url} className="rounded-2xl " /></div>

@@ -55,7 +55,7 @@ export default function AccommodationDetails() {
                 </a>
             </p>
             {/* images */}
-            <div className={`grid md:grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3 relative`}>
+            <div className={`grid md:grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3 relative border  rounded-2xl overflow-hidden`}>
                 <div>
                     <img src={place.photos[0]?.url} className="object-cover aspect-square" />
                 </div>
