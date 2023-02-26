@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import BookingWidget from '../components/BookingWidget';
 
 export default function AccommodationDetails() {
     let { id } = useParams();
@@ -70,7 +71,22 @@ export default function AccommodationDetails() {
                     Show all photos
                 </button>
             </div>
-
+            <div>
+                <div className='grid grid-cols-[2fr_1fr] mt-8'>
+                    <div>
+                        <h2 className='text-2xl font-semibold'>Description</h2>
+                        <p>{place.description}</p>
+                        <p>check in - {place.checkIn}</p>
+                        <p>check out - {place.checkOut}</p>
+                        <p>Max number of guests - {place.maxGuests}</p>
+                    </div>
+                    <BookingWidget place={place} />
+                </div>
+            </div>
+            {place.extraInfo && <div>
+                <h2 className='text-2xl font-semibold'>Extra Info</h2>
+                <p className='text-gray-500'>{place.extraInfo}</p>
+            </div>}
         </div>
     )
 }

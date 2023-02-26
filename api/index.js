@@ -155,7 +155,6 @@ app.get('/places' , async (req,res) => {
             }
         }
     );
-    console.log(places)
     return res.status(200).json(places);
 })
 
