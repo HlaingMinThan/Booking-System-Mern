@@ -16,6 +16,7 @@ model User {
   email String @unique
   password String
   places  Place[]
+  bookings  Booking[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -66,6 +67,8 @@ model Booking {
   name String
   phone String
   price Float
+  user_id Int
+  user User @relation(fields: [user_id],references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

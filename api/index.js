@@ -286,6 +286,35 @@ app.put('/places/:id', async (req,res) => {
     }
 });
 
+app.get('/bookings', async (req,res) => {
+    let {token} = req.cookies;
+    if(token) {
+        let userPayload = jwt.verify(token,process.env.JWT_SECRET);
+        if(userPayload) {
+            let bookings = await prisma.booking.findMany({
+                where : {
+                    user_id : userPayload.id
+                },
+                orderBy : {
+                    created_at  : "desc"
+                },
+                include : {
+                    place : {
+                        include : {
+                                photos : true
+                        }
+                    }
+                }
+            });
+            return res.status(200).json(bookings);
+        }else {
+            return res.status(422).json('user not found with that token');
+        }
+    }else{
+        return res.status(422).json('token required');
+    }
+})
+
 app.post('/bookings', async (req,res) => {
     const { checkIn, checkOut, name, phone, price ,place_id } = req.body;
     

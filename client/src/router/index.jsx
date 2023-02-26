@@ -6,6 +6,7 @@ import Register from '../pages/Register'
 import AccountLayout from '../pages/layouts/AccountLayout'
 import Profile from '../pages/Profile'
 import Bookings from '../pages/Bookings'
+import BookingDetails from '../pages/BookingDetails'
 import Accommodations from '../pages/Accommodations'
 import AccommodationCreate from '../pages/AccommodationCreate'
 import AccommodationEdit from '../pages/AccommodationEdit'
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: "bookings",
             element: <Bookings />
+          },
+          {
+            path: "bookings/:id",
+            element: <BookingDetails />
           },
           {
             path: "accommodations",
