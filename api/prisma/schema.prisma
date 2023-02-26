@@ -31,6 +31,7 @@ model Place {
   maxGuests Int
   photos Photo[]
   features Feature[]
+  bookings Booking[]
   owner_id Int
   owner User @relation(fields: [owner_id],references: [id])
   price Float
@@ -52,6 +53,19 @@ model Feature {
   name String
   place_id Int
   place   Place @relation(fields: [place_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Booking {
+  id Int @id @default(autoincrement())
+  place_id Int
+  place   Place @relation(fields: [place_id], references: [id])
+  checkIn DateTime
+  checkOut DateTime
+  name String
+  phone String
+  price Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import download from 'image-downloader'
 import multer from 'multer';
+import { parseISO, toDate } from 'date-fns';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -283,6 +284,22 @@ app.put('/places/:id', async (req,res) => {
             return res.status(200).send(place);
         }
     }
+});
+
+app.post('/bookings', async (req,res) => {
+    const { checkIn, checkOut, name, phone, price ,place_id } = req.body;
+    
+    let booking = await prisma.booking.create({
+        data : { 
+            checkIn : toDate(parseISO(checkIn)), 
+            checkOut : toDate(parseISO(checkOut)), 
+            name, 
+            phone, 
+            price ,
+            place_id 
+        }
+    });
+    return res.status(200).json(booking);
 });
 
 app.listen(4000,() => {
